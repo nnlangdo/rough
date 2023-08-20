@@ -1,0 +1,36 @@
+{% for fm_form in family_member_forms %}
+<div class="family-member">
+    <div class="row">
+    <div class="col-lg-4 col-md-6 mb-2">
+        {{ fm_form.name.errors }}
+        <label for="{{ fm_form.name.id_for_label }}">Family Member Name</label>
+        {{ fm_form.name }}
+    </div>
+    <div class="col-lg-4 col-md-6 mb-2">
+        {{ fm_form.gender.errors }}
+        <label for="{{ fm_form.gender.id_for_label }}">Gender</label>
+        {{ fm_form.gender }}
+    </div>
+    <div class="col-lg-4 col-md-6 mb-2">
+        {{ fm_form.age.errors }}
+        <label for="{{ fm_form.age.id_for_label }}">Age</label>
+        {{ fm_form.age }}
+    </div>
+</div>
+</div>
+{% endfor %}
+<div id="family-members" class="container">
+    <button type="button" class="btn btn-success me-2"
+    hx-get="{% url 'hawan:add_family_member_field' %}"
+    hx-target="#familymember_fields"
+    hx-swap="beforeend"
+    >+ Add Family Members</button>
+
+    {% for fm_form in family_member_forms %}
+    <div class="family-member">
+        <div class="row" id="familymember_fields">
+            {% include 'partials/add_familymember_form.html' %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>

@@ -1,0 +1,70 @@
+{% extends 'hawan/base.html' %}
+
+{% block title %}Yazman Management{% endblock %}
+
+{% block style %}
+<style>
+
+    .info{
+        color: red;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div x-data="{ open: false }">
+    <button class="btn btn-warning btn-sm mt-3 ms-2" x-on:click="open = !open">Register Yajman For Hawan</button>
+    <div x-show="open">
+
+<div class="container">
+    <h2>Add Participant with Family Members</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        {% for family_member_form in family_member_forms %}
+        <div id="family-members">
+            <h4>Family Member {{ family_member_form.prefix }}</h4>
+            {{ family_member_form.as_p }}
+        </div>
+        {% endfor %}
+        
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+    </div>
+</div>
+<div class="px-3">
+    <h5 class="text-center">List of Registered Yajman for Hawan</h5>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Hawan Date</th>
+            <th scope="col">Yajman</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Id +</th>
+            <th scope="col">Address</th>
+            <th scope="col">Members</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for p in participants %}
+          <tr>
+            <th scope="row">{{ p.id }}</th>
+            <td>{{ p.event|date:"d-m-Y" }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.phone }}</td>
+            <td>{{ p.type_id }}-{{ p.number_id }}</td>
+            <td>{{ p.village }},{{ p.district }},{{ p.state }}</td>
+            <td>{{ p.family_members }}</td>
+            <td>{{ p.status }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock %}

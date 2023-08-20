@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <title>Registration Letter</title>
+</head>
+<body>
+    <div class="mt-2">
+        <div class="row" style="color: red;background-color: yellow;">
+            <div class="col-2 text-center p-2"><img class="p-2 bg-secondary rounded-circle" src="{% static 'images/trustlogo2.png' %}" width="60" height="60" alt=""></div>
+            <div class="col-8 text-center pt-2" style="font-size: 15px;font-weight: bold;">
+                श्रीराम जन्मभूमि तीर्थ क्षेत्र, अयोध्या (Shriram Janmbhoomi Tirth Kshetra, Ayodhya)<br/>
+            <span class="text-center" style="font-size: 12px;font-weight: bold;color: navy;">
+                हवन पंजीकरण पत्र (Registration Letter For Hawan) help line - 9024245497
+            </span>
+            </div>
+            <div class="col-2 text-center p-2"><img class="p-2 bg-secondary rounded-circle" src="{% static 'images/yajna1.png' %}" width="60" height="60" alt=""></div>
+        </div>
+        <div style="width: 1000px;margin: 20px auto;">
+            <p><b>यजमान का विवरण (Yajman Detail):</b></p>
+            <table class="table table-bordered">
+            <tr>
+                <th>Serial</th>
+                <th>Date</th>
+                <th>Yajman</th>
+                <th>Id +</th>
+                <th>Address</th>
+            </tr>
+            <tr>
+                <td>{{ participant.id }}</td>
+                <td>{{ participant.event }}</td>
+                <td>{{ participant.name }}/
+                    {% if participant.gender == "male" %}
+                            M
+                        {% else %}
+                            F
+                        {% endif %}
+                </td>
+                <td>{{ participant.type_id }}-{{ participant.number_id }}</td>
+                <td>{{ participant.village }},{{ participant.district }},{{ participant.state }}</td>
+            </tr>
+            </table>
+            {% if participant.familymember_set.all %}
+            <p><b>सहभागी स्वजन का विवरण (Companions):</b></p>
+            <table class="table table-bordered">
+                {% for family_member in participant.familymember_set.all %}
+                {% if forloop.counter0|divisibleby:4 %}
+                <tr>
+                {% endif %}
+                <td><b>{{ forloop.counter }}</b>-{{ family_member.name }}/
+                {% if participant.gender == "male" %}
+                    M
+                {% else %}
+                    F
+                {% endif %}</td>
+                {% if forloop.counter|divisibleby:4 or forloop.last %}
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+            {% endif %}
+            <div class="row">
+                <div class="col">हवन पंजीकरण पास पूर्णतया निःशुल्क है।  परन्तु यदि आप दान देना चाहते हैं तो <b>'श्रीराम जन्मभूमि तीर्थ क्षेत्र'</b>
+                     ट्रस्ट (<b>श्रीराम जन्मभूमि मंदिर</b> निर्माण व प्रबंधन हेतु <b>केंद्र सरकार</b> द्वारा बनाया गया ट्रस्ट) में दान कर कंप्यूटराइज्ड रसीद प्राप्त कर सकते हैं। 
+                     इसके अतिरिक्त हवन करने वाले पुजारी जी को दक्षिणा दे सकते हैं। </div>
+                <div class="col">Note: This Hawan registration pass is offered completely free of charge; however,
+                    if you wish to contribute, you have the option to make a donation to the 
+                    <b>'Shriram Janmbhoomi Tirth Kshetra'</b> Trust (made by <b>Central Government</b>
+                        for <b>Shriram Janmbhoomi Mandir</b> construction and management).
+                     Additionally, you may choose to offer 
+                    daxina to the Pujari ji conducting the Hawan.        
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

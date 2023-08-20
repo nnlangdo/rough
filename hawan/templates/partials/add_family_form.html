@@ -1,0 +1,44 @@
+<form id="family-members-form" hx-post="{% url 'hawan:add_family_form' participant_id=participant.id %}"
+hx-trigger="click from:#submit-all"
+>
+    {% csrf_token %}
+    <div class="row form-group">
+        <div class="col">
+            {{ fm_form.name.errors }}
+            <label for="{{ fm_form.name.id_for_label }}">Family Member Name</label>
+            {{ fm_form.name }}
+        </div>
+        <div class="col align-self-end">
+            {{ fm_form.gender.errors }}
+            <label for="{{ fm_form.gender.id_for_label }}">Gender</label>
+            {{ fm_form.gender }}
+        </div>
+        <div class="col align-self-end">
+            {{ fm_form.age.errors }}
+            <label for="{{ fm_form.age.id_for_label }}">Age</label>
+            {{ fm_form.age }}
+        </div>
+        <div class="col align-self-end">
+            <button type="button" class="btn btn-danger btn-sm"
+            hx-on="click: this.closest('form').remove()"
+            >Cancele</button>
+        </div>   
+    </div><!--End Row-->    
+</form>
+<script>
+    document.addEventListener("htmx:afterSwap", function(evt) {
+        if (evt.detail.target.id === "family-members-form") {
+            const form = evt.detail.target;
+            form.addEventListener("htmx:afterSettle", function() {
+                if (!form.contains(document.activeElement)) {
+                    window.location.href = "{% url 'hawan:view_page' %}"; // Redirect to the intended page
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
+

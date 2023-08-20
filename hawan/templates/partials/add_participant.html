@@ -1,0 +1,114 @@
+
+<div class="myform mb-5 shadow p-4">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h3 class="text-center">Register Yazman For Hawan</h3>
+    <hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        {{ form.non_field_errors }}
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.event.errors }}
+                <label for="{{ form.event.id_for_label }}">Event</label>
+                {{ form.event }}
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}">Name</label>
+                {{ form.name }}
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.gender.errors }}
+                <label for="{{ form.gender.id_for_label }}">Gender</label>
+                {{ form.gender }}
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.age.errors }}
+                <label for="{{ fm_form.age.id_for_label }}">Age</label>
+                {{ form.age }}
+            </div>    
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.type_id.errors }}
+                <label for="{{ form.type_id.id_for_label }}">Id Type</label>
+                {{ form.type_id }}
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.number_id.errors }}
+                <label for="{{ form.number_id.id_for_label }}">Id Number</label>
+                <input type="text" name="number_id" id="id_number_id" class="form-control">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.phone.errors }}
+                <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+                {{ form.phone }}
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.state.errors }}
+                <label for="{{ form.state.id_for_label }}">State</label>
+                <select name="state" id="id_state" class="form-control"
+                    hx-get="{% url 'hawan:district' %}"
+                    hx-trigger="change"
+                    hx-target="#id_district"
+                    >
+                    <option selected>Select State</option>
+                {% for p in provinces %}            
+                        <option value="{{ p.pk }}">{{ p.name }}</option>            
+                {% endfor %}
+            </select>
+                <!-- {{ form.province }} -->
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.district.errors }}
+                <label for="{{ form.district.id_for_label }}">District</label>
+                <div id="id_district">
+                    {% include 'partials/districts.html' %}
+                </div>               
+                              
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.village.errors }}
+                <label for="{{ form.village.id_for_label }}">Vill/Town/City</label>
+                {{ form.village }}
+            </div>
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.family_members.errors }}
+                <label for="{{ form.family_members.id_for_label }}">Family-Members</label>
+                {{ form.family_members }}
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.position.errors }}
+                <label for="{{ form.position.id_for_label }}">Position</label>
+                {{ form.position }}
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-2">
+                {{ form.status.errors }}
+                <label for="{{ form.status.id_for_label }}">Status</label>
+                {{ form.status }}
+            </div>
+        </div>
+    </div>
+    <!-- Family Member Forms -->
+    <hr>
+    </div>
+
+    <div class="col-4 container">
+        <input class="form-control me-2 btn btn-primary" type="submit" value="Add Yazman">
+    </div>
+
+</form>
+</div>
+
+
+
+
+

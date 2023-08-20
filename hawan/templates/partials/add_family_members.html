@@ -1,0 +1,34 @@
+{% extends 'hawan/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 style="margin-top: 50px;">Add Family Members for {{ participant.name }}</h2>
+    
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div id="family-members">
+            {% for fm_form in fm_forms %}
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-2">
+                    {{ fm_form.name.errors }}
+                    <label for="{{ fm_form.name.id_for_label }}">Family Member Name</label>
+                    {{ fm_form.name }}
+                </div>
+                <div class="col-lg-4 col-md-6 mb-2">
+                    {{ fm_form.gender.errors }}
+                    <label for="{{ fm_form.gender.id_for_label }}">Gender</label>
+                    {{ fm_form.gender }}
+                </div>
+                <div class="col-lg-4 col-md-6 mb-2">
+                    {{ fm_form.age.errors }}
+                    <label for="{{ fm_form.age.id_for_label }}">Age</label>
+                    {{ fm_form.age }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Add Family Members</button>
+    </form>
+</div>
+{% endblock %}

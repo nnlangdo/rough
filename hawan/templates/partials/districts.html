@@ -1,0 +1,7 @@
+
+<select name="district" class="form-control">
+    <option selected>Select District</option>
+    {% for d in districts %}            
+            <option value="{{ d.pk }}">{{ d.name }}</option>            
+    {% endfor %}
+</select>

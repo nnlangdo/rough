@@ -1,0 +1,60 @@
+{% extends 'hawan/base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Add Participant with Family Members</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ participant_form.as_p }}
+        <div id="family-members">
+            {% for form in formset %}
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-lg-4 col-md-6 mb-2">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                        </div>
+                    {% endfor %}
+                    <div class="col-lg-4 col-md-6 mb-2">
+                        <label for="id_form-{{ forloop.counter0 }}-DELETE">Delete</label>
+                        <input type="checkbox" id="id_form-{{ forloop.counter0 }}-DELETE" name="form-{{ forloop.counter0 }}-DELETE">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-family-member">Add Family Member</button>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addFamilyMemberButton = document.getElementById('add-family-member');
+        const familyMembersContainer = document.getElementById('family-members');
+        
+        addFamilyMemberButton.addEventListener('click', function() {
+            const newRow = document.createElement('div');
+            newRow.classList.add('row');
+            newRow.innerHTML = `
+                {% for field in formset.empty_form %}
+                    <div class="col-lg-4 col-md-6 mb-2">
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="col-lg-4 col-md-6 mb-2">
+                    <label for="id_form-${formCount}-DELETE">Delete</label>
+                    <input type="checkbox" id="id_form-${formCount}-DELETE" name="form-${formCount}-DELETE">
+                </div>
+            `;
+            familyMembersContainer.appendChild(newRow);
+            formCount++;
+        });
+
+        familyMembersContainer.addEventListener('change', function(event) {
+            if (event.target.type === 'checkbox' && event.target.name.includes('DELETE')) {
+                const formRow = event.target.closest('.row');
+                formRow.style.display = event.target.checked ? 'none' : 'block';
+            }
+        });
+    });
+</script>
+{% endblock %}
